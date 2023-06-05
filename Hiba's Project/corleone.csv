@@ -1,0 +1,14 @@
+Person 1,Relation,Person 2,Gender,Details
+Jonathan,Earliest Ancestor,,M,xyz
+Sara,spouce,Jonathan,F,xyz
+Henry,child,Jonathan,M,xyz
+Julie,child,Jonathan,F,xyz
+William,child,Jonathan,M,xyz
+Katie,spouce,Henry,F,xyz
+Kevin,spouce,Julie,M,xyz
+Laura,spouce,William,F,xyz
+Betty,child,Henry,F,xyz
+Katherine,child,Julie,F,xyz
+David,child,William,M,xyz
+Ricard,child,William,M,xyz
+Daniel,spouce,Betty,M,xyz

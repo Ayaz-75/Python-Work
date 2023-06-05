@@ -1,0 +1,1 @@
+{"Amazon": {"email": "lakho@example.com", "password": "0$OgeUrQ(S#%V1x8m"}}

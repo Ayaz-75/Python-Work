@@ -1,0 +1,5 @@
+// Ancestry
+digraph {
+	graph [splines=ortho]
+	Jonathan [label=Jonathan shape=rect tooltip=xyz]
+}

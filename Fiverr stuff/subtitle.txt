@@ -1,0 +1,102 @@
+Hello and welcome to a Code Walk Through. In this bit of code, we're talking about emaildb.py. This is a beautiful little example in that it sort of reduces talking to the database
+to kind of its pure essence. And so we'll start out this code and we import the
+sqlite3 just to get the library there. We make a connection and that, in databases, we sort of end up with
+an open that's two steps. That there's the connection to the database
+which checks access to the file and the cursor is kind of like our handle. It's not as simple as you just open it and read it, but you open it and then you send SQL commands the cursor and then you get your
+responses through that same cursor. So cur here is the variable that we're interested in. And the first thing that we're going to do, is we're going to. we've got this file, it will either create this file and
+right now this file doesn't exist. It's going to be in the same directory. There's no emaildb so this is actually
+going to create the file when it runs. And then the first thing we're going to do
+is drop the table if it exists, drop table is a bit of SQL. If exist just keeps this from blowing
+up if we start with a fresh database and in this case there is no file there so we are starting
+with a fresh database. This will accomplish absolutely nothing, which is just fine. Now we're using triple quotes here. I'm just kind of using that to make
+this a little bit easier to read. I could pull those lines up a bit. This one's actually small enough that I could, maybe I'll just do that. Let's do that. Let's bring that baby right up and
+turn this into a single quote. That's short enough, but triple code is just this one here's a
+little longer so I'll use triple quote. I'm going to drop table. That's going to do
+nothing first time through, then we're going to do a create table. Now sometimes your application will have
+like a read me or something that says, go run these commands to set the database up
+but we're able to just set this database up
+in this particular application. We'll see later ones where we're going to leave the database and not start it fresh
+and in this one, we can do the same. In this one, we could but we're just going to start fresh by
+dropping the table so we'll create it. We're going to have email, an account. Basically, what we're doing here is we're really going to pretend that this is a dictionary. If you recall when I said dictionary, a dictionary is like an in-memory database. Well, now we're using a database to do a database but the first thing we're going
+to do here is pretend it's a dictionary. So these next lines of code, hopefully are pretty familiar to you, right? You get a file name, loop through it, check to see if it's, grab mbox-short by default so we can press the enter key,
+and then loop through it. And so this little part right here, this is our basic loop that we're doing
+and so that is pretty normal. And if we look at this line right here, that line right there makes sure that
+we can only get the From lines, we've done that a bunch of times
+and we're going to split it. We're not going to strip the right
+because the split is going to take care of that and then we're going to grab the email address,
+which of course, in the From line is the second part
+and then we will have that. So now we're going to do some database. The first thing we're going to do, this bit right here is kind of like
+the dictionary part. So the first thing that we're going to do
+is we're going to select count from our database, that is an integer, where email equals. And this part right here
+bears some explaining. This is going to be csev@umich.edu or whatever. Now, it is dangerous to put those strings, especially from user-entered
+data, into your SQL. You technically could. I could make this be a email equals 'csev@umich' I would have to escape the quotes and stuff,
+but this question mark is a placeholder. And this is a way to basically make sure
+that we don't allow SQL injection. Go Google SQL injection to get a sense of what that is, it's more of an issue in online applications
+but in this application, we're just being good. So the way this works is, this is a placeholder in this SQL, that will ultimately be replaced by this. Now you could have several question marks. We only have one in here and so you give a tuple. And if we just put email,
+it won't turn into a tuple, this is a one-tuple basically, this little weird parentheses email comma. Parentheses, that is a tuple with only one thing in it and
+that's just the weird Python syntax. It's rare that I apologize for
+Python syntax but that's a little bit less than pretty. But it's okay, it's a tuple. Normally, if there were like two of these, then there would be email name. So this cur.execute is actually not
+really retrieving the data. In a way, it's looking at the SQL and
+making sure that maybe it might verify that the table name is right or if there's
+any syntax errors, etc. So this is actually not really reading the data,
+but we have prepared this cursor, This is kind of like the opening of a file
+but what we're opening is a record set. We're opening a set of records that are going to be this wherever it is true so it's like
+we're going to read this like a file. Now, later things will loop through this
+but we're only going to say, hey grab that first one, We could have even put maybe a
+limit clause on there or something. Grab the first one and give it back in row.
+And so row is going to be the information that we get from the database. That is, if there are no records that meet this, then row is going to be null. So here's kind of again like the get, where if the row wasn't there
+because the way we're doing this, is we're going to end up with
+this row in the database. Here is this database and there's going to be two columns and there's a
+bunch of rows and then here's going to be see csev 4 and zhen 3 and steven 6. So these are accounts and so
+we're grabbing this variable out if it's csev that we're grabbing and
+that's going to come into here. That's going to show up in here and that row is a list but we're only getting one thing. And what we really are doing is if we search through and we got through and there was nothing,
+then row was None means that there was none and we're seeing like chen for the first time, we will have to insert it. So if row is None, we're going to run an insert statement, insert into Counts email, count. Now, we've got to set it to 1 because
+it's the first time we've seen it. So values and then, again, the question mark, the question mark basically says, hey I'm going to have a value in this tuple
+and there's an orderin g to the tuple. So there's only one question here. One question mark placeholder here and then 1 is the initial count so email, question mark, count 1 away we go and so then again we have a tuple that gives to this execute statement,
+just like in that execute statement, the corresponding sort of strings or integers that are to be placed by
+each of the questions. So when this runs, there's going to be a
+new record and there's going to be a 1 that's put in there into that new record. If, on the other hand, we pull back
+a row that exists, we're going to get this 4 number
+and you might think we want to take this 4 number and add it
+but in databases it's always better to do an update because there might be multiple applications that are talking
+to this database at the same time. So no matter what update does
+is in a single atomic operation, it turns whatever this number is into
+one higher and we don't have to worry about other pieces of code
+potentially modifying it. Now in this case we don't have to
+worry about that because we're the only piece of code but using update to increment something is way better than reading the value and then doing an update to
+adding one inside of Python and then updating the new value which is that two SQL statements but it's also not atomic. So if the row exists, we just know that it exists and we
+just want to add one to the number. We do have the number sitting here in the
+row variable but we don't need it. And so we're going to say, update count, set count equals count plus 1 comma name, where email equals and then another placeholder and then another tuple
+for the question mark. Okay? So that's what this little bit of code does. That is kind of the the read it, parse it, check to see if it's there, if it's not, insert it, if it is, update it. And so then, we see this conn.commit. And this conn.commit, basically the
+way it works is that the database is efficiently keeping some
+of the information in memory and at some point, has to write all that stuff out to disk. So you can choose at times where you
+put this commit and right now, we're going to commit every time
+through this loop but you might commit every 10th time through the loop
+because the commit will take some time because it forces everything
+to be written to disk and these can run really fast and
+the commit is the slowest part here. So sometimes we do things like commit
+every 10th record or every 100th record. If it's an online system, which is not what this is, you have to commit at the end of
+every sort of screen thing, but for this kind of a system because we're putting so much in as
+kind of a bulk insert, we might come up with a thing where every one
+every 10th time we do a commit. But ultimately, what this will do,
+when this is running, is it will build up slowly but surely
+adding new records and then 1, 1, and then a 2 and a 3 and all these things and add
+another 1, that will be 1. It'll do this thing, right?
+And at the end of the day, that is what's going to be in the database. So let's take a look at what's in the database and now we
+can actually read the database and so, in the database, we're going to run a select
+and we're going to select the email account from counts order
+by count descending. So look at that, isn't that cool? We're getting in the top ten because databases are good at sorting and they're good at
+all these other things. So we're going to then execute this and then
+we're going to ask for the rows one at a time and the rows are going to be a tuple and row sub zero will be email
+and row sub one will be count. So we run all this stuff and then we
+close the connection and away we go. Okay? So let's go ahead and run all this stuff
+python3 emaildb.py. It asks for a filename mbox-short. I can hit enter right mbox-short. And that's it, and it looks just like that
+and it counts it and away we go. The difference is, at this point, we have a file emaildb.sqlite and we can run the sqlite browser and we can then open this database and we can see what's in there.
+So here we go. It has made an SQLite database. We have a table of counts and then we can
+take a look at the data and there we go. We've got the data and we can do this. Let me close this. It's important at times when you
+don't want necessarily to have, let's see if we can cause it to lock up. Let me run this again and it's going
+to drop this table so I'm going to run the code again but this time, I am going to do the full one, mbox.txt. Now, we'll see what happens here. But it ran so what we have to do then to see this data, this is from the previous run but
+if we wanted the most recent one, we hit refresh and then away we go
+and so we can see this stuff. And so this is just a real simple start to see how you can connect some of the stuff that we've been doing but store the data in a database, but the nice thing about the database is that it can store this stuff from run to run even though, in this case we're dropping the table every time. In later things, we will see how we can
+store data from run to run to give ourselves more restartable processes.
+Cheers.

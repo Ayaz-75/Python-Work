@@ -1,0 +1,10 @@
+from selenium import webdriver
+browser = webdriver.Edge()
+browser.get("https://www.github.com")
+signin_link = browser.find_element_by_link_text("Sign in")
+signin_link.click()
+user_name_box = browser.find_element_by_id("login_field")
+user_name_box.send_keys("ayazalilakho2@gmail.com")
+password_box = browser.find_element_by_id("password")
+password_box.send_keys("Hajoo786")
+password_box.submit()

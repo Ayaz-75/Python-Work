@@ -7,8 +7,8 @@ from selenium.webdriver.chrome.service import Service
 
 
 
-my_email = "lakho_75"
-my_password = "Hajoo18cs75"
+my_email = "your email"
+my_password = "Your password"
 
 
 

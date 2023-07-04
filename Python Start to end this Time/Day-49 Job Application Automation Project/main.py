@@ -26,8 +26,8 @@ time.sleep(5)
 username = driver.find_element(By.ID, "username")
 password = driver.find_element(By.ID, "password")
 
-username.send_keys("hisherhim2022@gmail.com")
-password.send_keys("Hajoo18cs75")
+username.send_keys("your email")
+password.send_keys("your password")
 password.send_keys(Keys.ENTER)
 
 
@@ -45,95 +45,4 @@ next_button.click()
 
 
 driver.quit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#
-# email_or_phone = driver.find_element(By.ID, "username")
-# print(email_or_phone.text)
-# # email_or_phone.send_keys("hisherhim2022@gmail.com")
-# # email_or_phone.send_keys(Keys.ENTER)
-#
-#
-# password = driver.find_element(By.ID, "password")
-# print(password.text)
-# password.send_keys("Hajoo18cs75")
-# password.send_keys(Keys.ENTER)
-
-
-
-
-# time.sleep(3)
-# login = driver.find_element(By.CSS_SELECTOR, ".btn__primary--large")
-# print(login.text)
-# login.click()
-
-#
-# search_job = driver.find_element(By.ID, "jobs-search-box-keyword-id-ember350")
-# search_job.send_keys("Python developer")
-# search_job.send_keys(Keys)
-#
-
-#
-# easy_apply = driver.find_element(By.CSS_SELECTOR, ".artdeco-button__text")
-# easy_apply.click()
-#
-
-# mobile_num = driver.find_element(By.CLASS_NAME, ".ember-view")
-# mobile_num.send_keys("1122334455")
-# mobile_num.send_keys(Keys.ENTER)
-#
-#
-# next_button = driver.find_element(By.CLASS_NAME, ".artdeco-button__text")
-# next_button.click()
 

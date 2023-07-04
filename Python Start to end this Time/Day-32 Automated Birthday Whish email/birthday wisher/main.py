@@ -28,8 +28,8 @@ if today in birthdays_dict:
 # HINT 3: Remember to login to your email service with email/password. Make sure your security setting is set to allow less secure apps.
 # HINT 4: The message should have the Subject: Happy Birthday then after \n\n The Message Body.
 
-my_email = "hisherhim2022@gmail.com"
-my_password = "fqhbljpavieykgoz"
+my_email = "your email"
+my_password = "your password"
 
 with smtplib.SMTP("smtp.gmail.com") as connection:
     connection.starttls()
